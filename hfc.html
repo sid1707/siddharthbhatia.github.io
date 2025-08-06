@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HFC Problems</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    .problem {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    .full-problem {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Complex problems to challenge AI models</h1>
+
+  <div class="problem" onclick="toggleProblem(this)">
+    <strong>Protein aggregation problem</strong>
+    <div class="full-problem">
+    We are investigating aggregation of Amyloid Beta ($A\beta$) proteins in neuronal cells under fluctuating physiological and environmental conditions. The rate of change of $A\beta$ production is affected by the levels of misfolded $A\beta$ proteins $M(t)$ in the cell and reactive oxygen species (ROS) $R_t$:
+    \[
+    \text{Rate of change A}\beta\,\text{production }=\frac{{57.9}}{1+e^{0.6\cdot\,M(t)}+0.8\cdot\,R(t)}
+    \]
+    Rate of change of protein degradation increases with oxidative stress and is defined as: 
+    \[
+    \text{Rate of change in A}\beta \text{  depletion}=\frac{1}{1+e^{0.4\cdot(4-R(t))}}\cdot\,A(t)
+    \]
+    The rate of change of misfolded proteins increases with elevated ROS,  disturbed pH and temperature stress:
+    \[
+    \frac{dM}{dt}=\frac{A(t)}{1+e^{4-R(t)}}\cdot\,{1-e^{-(pH(t)-7.4)^2}}\cdot\,{1-e^{-0.05\cdot\,(T(t)-37)^2}}
+    \]
+    The rate of change of misfolded protein is infu
+    ROS level $R(t)$ fluctuates with  metabolic cycles defined as: 
+    \[
+    R(t)=0.3\cdot\,\left[3.6-0.7\cdot\,\sin\left({\frac{2\pi\,t}{9}}\right)\right]
+    \]
+    Change in the Chaperone protein $H(t)$ levels is influenced by the oxidative stress and misfolded protein in the cell by following relation:
+    \[
+    \frac{dH(t)}{dt}=\frac{0.08\cdot\, (R(t)+0.07\cdot\,M(t))}{1+e^{2\cdot\,(pH(t)-7)}}-0.2\cdot\,H(t)
+    \]
+
+    The turnover rate $k_{cat}$ for activated chaperone is found to be 0.56 $min^{-1}$. Chaperone-mediated clearance rate ($V_c$) is defined
+    \[
+    V_c=\frac{V_{max}\cdot\,M(t)}{0.3+M(t)}
+    \]
+    where
+    $V_{max}=k_{cat}\cdot\,H(t)$
+    Due to incubator malfunction, temperature fluctuates sinusoidally over time:
+    \[
+    T(t) = T_{\text{avg}} + A \cdot \cos\left( \frac{2\pi}{60}(t - 20) \right)
+    \]
+    $T(t)$ : Temperature at time $t$ 
+    $T_{\text{avg}}$ : Average temperature of the day
+    $A$ : Amplitude (half of the daily temperature range)
+    $t$ : Time in minutes
+    $t_{\text{peak}}$ : Time of the peak temperature
+    We noted that the average temperature of the incubator is $35^\circ\text{C}$ and maximum temperature was noted to be $43^\circ\text{C}$.  
+
+    The misfolded proteins in the cell have tendency to stick together and form  clusters following Smoluchowski coagulation equation: 
+
+    For each cluster of size $k>1$
+    \[
+    \frac{dC_k(t)}{dt}=\frac{1}{2}\sum_{i+j=k} K(i,j)\cdot,c_i(t)\cdot\,c_j(t)-c_k(t)\sum_{j} K(k,j)\cdot,c_j(t)
+    \]
+
+    Where, 
+
+    $C_k$ is cluster of size $k$
+    $K(i,j)$: aggregation kernel between clusters of size i and j
+
+    The aggregation kernel is a mathematical function that describes the rate at which two clusters of sizes stick together and is modeled by following relationship: 
+    \[
+    K(i,j,t)=(i^{1/3}+j^{1/3})\cdot\,\frac{T(t)}{T_0}\cdot\,e^{-0.35\cdot(pH(t)-7.4)^2}, T_0 = 37
+    \]
+
+    As the cluster size and number grow, they contribute to the acidification of the cellular environment. 
+
+    \[
+    pH(t)=7+ 0.5\cdot\sin\left({\frac{2\pi\, t}{60}}\right)-10\cdot\,\sum_{k=5}^{N}c_k(t)
+    \]
+
+    Initial conditions at \( t = 0 \):
+
+    \[
+    \begin{aligned}
+    A(0) &= 5 \\
+    M(0) &= 1 \\
+    H(0) &= 0.05 \\
+    C_k(0) &= 0 
+    \end{aligned}
+    \]
+    What is the concentration of $C_3$, the cluster of size 3, present in the cell after 2 hour?
+    </div>
+  </div>
+
+  <div class="problem" onclick="toggleProblem(this)">
+    <strong>Quorum sensing problem</strong>
+    <div class="full-problem">
+    We are studying a mixed population of two bacterial strains M and N. When cultured together, tthese strains compete for limited resources following the Lotka-Volterra competition model:
+    $$\frac{dN_m}{dt}=r_m\cdot N_m\left(1-\frac{N_m+\gamma N_n}{K}\right), \frac{dN_n}{dt}=r_n\cdot N_n\left(1-\frac{N_n+\delta N_m}{K}\right) $$
+    with parameters: 
+    $r_m =0.15, \gamma=0.3, r_n=0.5, \delta=0.8, K=1\times10^6$
+
+    Each bacterial strain expresses surface transporters that mediate glucose uptake via receptor-ligand binding:
+    $$\frac{dRL_m}{dt}=N_m\cdot 0.6\times10^{-5}\cdot\,L(t)-0.3\cdot RL_m$$, $$\frac{dRL_n}{dt}=N_n\cdot 0.9\times10^{-5}\cdot\,L(t)-0.4\cdot RL_n$$
+    where, 
+    $RL_m$ and $RL_n$ are the receptor-ligand complexes of strain M and N respectively, and 
+    $L(t)=(5+ 2\cdot\ sin(\frac{t}{10}))\cdot 10^6$  is the fluctuating glucose concentration over time (in minutes).
+
+    Glucose-bound receptors trigger production of protein B via first-order kinetics:: 
+    $$\frac{dB_m}{dt}=0.025\cdot RL_m-0.3\cdot B_m, \frac{dB_n}{dt}=0.03\cdot RL_n-0.4\cdot B_n$$
+
+    Strains M and N synthesize autoinducers $A_m$ and $A_n$, regulated by their respective B protein levels through a Hill function with Hill coefficient n=2:
+    $$\frac{dA_m}{dt}=2.02\times10^6\cdot\,\frac{B_m^n}{(2\times10^6)^n+B_m^n}-0.4\cdot A_m$$
+    $$\frac{dA_n}{dt}=2.6\times10^6\cdot\,\frac{B_n^n}{(2.3\times10^6)^n+B_n^n}-0.2\cdot A_n$$
+
+    Once $A_m$ and $A_n$ cross thresholds of $4 \times 10^6$ and $2.5 \times 10^6$ respectively, a fraction of the bacterial populations begins secreting virulence factors:
+    $$\text{Strain M: } 0.6\% \text{ of cells secrete } V_m$$
+    $$\text{Strain N: } 1.6\% \text{ of cells secrete } V_n$$
+
+    The virulence factors degrade at the following rates:
+    $$\frac{dV_m}{dt} = -0.2 \cdot V_m, \quad \frac{dV_n}{dt} = -0.3 \cdot V_n$$
+
+
+    The virulence factors collectively damage host HEK cells:
+    $$\frac{dC}{dt}=1\times10^{-7}\cdot\ V_t\cdot C$$
+    where C is the number of HEK cells and $V_t$ is $V_m+V_n$
+
+    Above a strain-specific toxicity threshold $\theta$, the virulence becomes self-toxic to the bacteria: 
+    $$\frac{dN_m}{dt}=-\lambda_m\cdot\ (V_t-\theta_m)\cdot N_m, \frac{dN_n}{dt}=-\lambda_n\cdot\ (V_t-\theta_n)\cdot N_n$$
+    where, 
+    $\lambda_m=1\times10^{-5}, \lambda_n=1.5\times10^{-5}, \theta_m=3\times10^4, \theta_n=3.2\times10^4$
+
+    We are investigating the efficacy of drug $I$ on these bacterial strains which reduces the effective concentration of $B_m$ and $B_n$ by the following equation:
+    $$B_m(effective)=\frac{B_m}{1+\frac{I}{K_m}}, B_n(effective)=\frac{B_n}{1+\frac{I}{K_n}}$$
+
+    We have maintained HEK cell culture seeded at the initial concentration of $1\times10^7$ cells. At $t=0$, we added 10 CFU of bacterial strain M. We let the bacterial strain M grow for an hour in the media. After that, we added 1000 CFU of strain N with  and let both of them grow together for an hour. After that, we introduce the drug that follows sinusoidal release profile: 
+    $$I(t)=1.5+1.2\cdot sin(\frac{t}{10})$$
+
+    We observed that CFU for HEK cells was measured at $7.52\times10^6$ after 1 hour of drug addition. Estimate the ratio of $\frac{K_m}{K_n}$ 
+    </div>
+</div>
+
+<div class="problem" onclick="toggleProblem(this)">
+    <strong>Protein synergy problem</strong>
+    <div class="full-problem">
+    You are tasked with estimating the degradation of fibrinogen in human plasma initiated by a snake venom serine protease (SVSP), which also activates prothrombin to thrombin. The system involves three key reactions: (R1) SVSP activates prothrombin to thrombin, (R2) thrombin degrades fibrinogen, and (R3) SVSP directly degrades fibrinogen. Initially, 0.5 mM SVSP and 1.7 g/mL fibrinogen are present at pH 7.4 and 37°C. Prothrombin is present at 1.4mM in the plasma. 
+    The reaction environment changes dynamically: (1) pH decreases linearly by 0.01 units per minute due to accumulating acidic byproducts (2) Temperature remains at 37°C until 60 minutes, then increases at 0.05°C per minute. At 45 minutes, the serine protease inhibitor PMSF is added, inhibiting SVSP with a first-order rate constant of 0.03 min⁻¹.  
+    \[
+    I_1(t) = 1 - e^{-0.03 \cdot (t - 45)} \quad \text{for } t \geq 45\text{ min}
+    \]
+    At 90 minutes, the thrombin-specific inhibitor Hirudin is introduced:
+    \[
+    I_2(t) = 1 - e^{-0.2 \cdot (t - 90)} \quad \text{for } t \geq 90\text{ min}
+    \]
+    Where, 
+    $I_1$ and $I_2$ are the fraction of SVSP and Thrombin inhibited respectively. 
+    SVSP follows Michaelis-Menten kinetics with substrate inhibition:
+    \[
+    \text{Rate}_{R3} = \frac{0.1 \cdot [E] \cdot [F]}{1.3 + [F] + \frac{[F]^2}{5}}
+    \]
+    Prothrombin Activation by SVSP (R1):
+    \[
+    \frac{d[P]}{dt} = -0.5 \cdot [E] \cdot [P] \cdot f(pH, T)
+    \]
+    $[P]$ : Prothrombin concentration (mM)  
+    $[E]$ : SVSP concentration (mM)  
+    $k_{\text{act}}$ : Rate constant for prothrombin activation by SVSP (mM$^{-1}$ min$^{-1}$)  
+    $f(pH, T)$ : Environmental modulation factor accounting for pH and temperature effects on enzyme activity  
+
+    Thrombin follows standard Michaelis-Menten kinetics:
+    \[
+    \text{Rate}_{R2} = \frac{0.1 \cdot [T] \cdot [F]}{1.0 + [F]}
+    \]
+    Where, 
+    $[F]$ is fibrinogen amount
+    $[T]$ is thrombin concentration
+    $[E]$ is SVSP concentration
+    . 
+    SVSP degradation follows the Arrhenius equation:
+    \[
+    k_{\text{deg}}(T) = 7.4\cdot e^{-\frac{E_a}{R \cdot (T + 273.15)}}
+    \]
+    where 
+    $k_{deg}$ is the rate constant for SVSP degradation, $E_a$ is 17 KJ/mol, $R$ is 8.314 J/mol/K and T is in degree celsius. 
+
+    SVSP activities are modulated by pH and temperature through the environmental factor:
+    \[
+    f(pH, T) = e^{-0.5 \cdot (pH - 7.4)^2} \cdot e^{\frac{-5000}{8.314 \cdot (T + 273.15)}}
+    \]
+
+    Estimate the concentration of fibrinogen remaining after 2 hours. 
+    </div>
+  </div>
+
+  <script>
+    function toggleProblem(element) {
+      const content = element.querySelector('.full-problem');
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      MathJax.typeset();
+    }
+  </script>
+
+</body>
+</html>
